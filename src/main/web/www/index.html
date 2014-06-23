@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html xmlns:ng="http://angularjs.org" lang="en">
+<!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />
+<link rel="stylesheet" href="styles/styles.css" />
+
+<style>
+	[ng\:cloak], [ng-cloak], .ng-cloak {
+		display: none !important;
+	}
+</style>
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]>
+<script src="bower_components/html5shiv/dist/html5shiv.min.js"></script>
+<![endif]-->
+
+<title ng-bind="'Javadoc - ' + $root.title"></title>
+
+<script type="text/ng-template" id="templates/packages.html">
+	<div class="row-fluid">
+		<div class="col-md-3">
+			<div class="sidebar-nav-fixed" id="sidebar" data-spy="affix" data-offset-top="200">
+					<h3>Packages</h3>
+					<ul>
+						<li ng-repeat="package in packages" ui-sref-active="active"><a ui-sref="packages.package({packageName:package.name})">{{package.name}}</a></li>
+					</ul>
+			</div>
+		</div>
+		<div class="col-md-9 span-fixed-sidebar">
+			<div ui-view></div>
+		</div>
+	</div>
+</script>
+<script type="text/ng-template" id="templates/package-summary.html">
+	<h3>Package {{package.name}}</h3>
+	<p ng-if="package.description">{{package.description}}</p>
+	<h3>Class Summary</h3>
+	<ul>
+		<li ng-repeat="class in package.classes"><a ui-sref="class({from:'packages', packageName:package.name, className:class.name})">{{class.name}}</a></li>
+	</ul>
+</script>
+<script type="text/ng-template" id="templates/classes.html">
+	<h3>Classes</h3>
+	<ul>
+		<li ng-repeat="class in classes"><a ui-sref="class({from:'classes', className:class.name, packageName:class.package})">{{class.name}}</a></li>
+	</ul>
+</script>
+<script type="text/ng-template" id="templates/class-summary.html">
+	<a ui-sref="packages.package({packageName:packageName})">{{packageName}}</a>
+
+	<h4>Class {{className}}</h4>
+</script>
+
+</head>
+<body class="antialiased" ng-cloak>
+	<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<!-- <a class="navbar-brand" ui-sref="packages">Bootstrap Javadoc Doclet 1.0-SNAPSHOT API</a> -->
+			</div>
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav" ng-controller="MenuCtrl">
+					<li ng-class="{active: isActive('packages')}"><a ui-sref="packages">Packages</a></li>
+					<li ng-class="{active: isActive('classes')}"><a ui-sref="classes">Classes</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</div>
+
+	<h3 class="container-fluid">Bootstrap Javadoc Doclet 1.0-SNAPSHOT API</h3>
+
+	<div class="container-fluid" ui-view>
+	</div><!-- /.container -->
+
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="bower_components/angular/angular.min.js"></script>
+	<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script src="data/packages.json"></script>
+	<script src="js/packages.js"></script>
+	<script src="js/classes.js"></script>
+	<script src="js/main.js"></script>
+	<script>
+		angular.element(document).ready(function() {
+			angular.bootstrap(document, ['javadoc']);
+		});
+	</script>
+</body>
+</html>

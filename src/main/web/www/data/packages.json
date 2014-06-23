@@ -1,0 +1,16 @@
+var __packages = [
+	{
+		"name": "liquibase.ext.opennms.autoincrement",
+		"classes": [
+			{ "name": "AddNamedAutoIncrementChange" }
+		]
+	},
+	{
+		"name": "liquibase.ext.opennms.createindex",
+		"classes": [
+			{ "name": "CreateIndexWithWhereChange" },
+			{ "name": "CreateIndexWithWhereGenerator" },
+			{ "name": "CreateIndexWithWhereStatement" }
+		]
+	}
+]
