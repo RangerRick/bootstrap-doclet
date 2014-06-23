@@ -120,6 +120,13 @@ public class BootstrapDoclet extends Doclet {
 
         for (final ClassDoc cd : m_root.classes()) {
             LOG.debug("ClassDoc: {}", cd);
+            
+            final DocletClass c = new DocletClass(cd);
+
+            final File classFile = new File(outputDirectory, "data/" + c.getName() + ".json");
+            final FileWriter fw = new FileWriter(classFile);
+            fw.write(c.toJSON().toString());
+            fw.close();
         }
 
         throw new UnsupportedOperationException("Not yet implemented!");
